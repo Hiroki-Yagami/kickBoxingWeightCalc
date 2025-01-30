@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>プログラミング学習プラットフォーム</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* ヘッダー */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 100;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        margin-left: 2rem;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #00ff95;
+      }
+
+      /* メインビジュアル */
+      .hero {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        padding: 2rem;
+      }
+
+      .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .hero-content p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      .cta-button {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        background: #00ff95;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s, background 0.3s;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        background: #00cc78;
+      }
+
+      /* メインコンテンツ */
+      .main-content {
+        position: relative;
+        z-index: 2;
+        background: white;
+        padding: 4rem 2rem;
+      }
+
+      .features {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-card {
+        padding: 2rem;
+        background: #f5f5f5;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .feature-card h3 {
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      /* フッター */
+      footer {
+        background: #333;
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">CodeArt</div>
+        <div class="nav-links">
+          <a href="#features">特徴</a>
+          <a href="#pricing">料金</a>
+          <a href="#contact">お問い合わせ</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <!-- p5.jsのキャンバスがここに描画される -->
+      <div class="hero-content">
+        <h1>創造的なコーディングを、<br />もっと自由に</h1>
+        <p>
+          アートとテクノロジーの融合で、プログラミングの新しい可能性を探求する
+        </p>
+        <button class="cta-button">無料で始める</button>
+      </div>
+    </section>
+
+    <section class="main-content" id="features">
+      <div class="features">
+        <div class="feature-card">
+          <h3>インタラクティブな学習</h3>
+          <p>実践的なコーディング環境で、創造性を活かしながら学習できます。</p>
+        </div>
+        <div class="feature-card">
+          <h3>アート思考</h3>
+          <p>
+            技術的なスキルだけでなく、デザイン思考も身につけることができます。
+          </p>
+        </div>
+        <div class="feature-card">
+          <h3>コミュニティ</h3>
+          <p>
+            創造的なコーダーたちとつながり、インスピレーションを共有できます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 CodeArt. All rights reserved.</p>
+    </footer>
+
+    <script>
+      let particles = [];
+      let numParticles = 300;
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        background(0);
+
+        // パーティクルを初期化
+        for (let i = 0; i < numParticles; i++) {
+          particles.push(new Particle());
+        }
+      }
+
+      function draw() {
+        // 背景を半透明で塗りつぶし、残像効果を作る
+        background(0, 15);
+
+        // 各パーティクルを更新・描画
+        for (let particle of particles) {
+          particle.update();
+          particle.display();
+          particle.checkEdges();
+        }
+
+        // パーティクル同士の相互作用（線を引く）
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            let distance = dist(
+              particles[i].position.x,
+              particles[i].position.y,
+              particles[j].position.x,
+              particles[j].position.y
+            );
+            if (distance < 100) {
+              stroke(map(distance, 0, 100, 255, 50), 255, 255, 100);
+              line(
+                particles[i].position.x,
+                particles[i].position.y,
+                particles[j].position.x,
+                particles[j].position.y
+              );
+            }
+          }
+        }
+      }
+
+      // パーティクルクラス
+      class Particle {
+        constructor() {
+          this.position = createVector(random(width), random(height));
+          this.velocity = p5.Vector.random2D().mult(random(1, 3));
+          this.acceleration = createVector(0, 0);
+          this.maxSpeed = 4;
+          this.color = color(random(255), random(255), random(255), 150);
+        }
+
+        update() {
+          this.velocity.add(this.acceleration);
+          this.velocity.limit(this.maxSpeed);
+          this.position.add(this.velocity);
+          this.acceleration.mult(0); // 加速度をリセット
+        }
+
+        display() {
+          noStroke();
+          fill(this.color);
+          ellipse(this.position.x, this.position.y, 5, 5);
+        }
+
+        checkEdges() {
+          if (this.position.x < 0) this.position.x = width;
+          if (this.position.x > width) this.position.x = 0;
+          if (this.position.y < 0) this.position.y = height;
+          if (this.position.y > height) this.position.y = 0;
+        }
+      }
+    </script>
+  </body>
+</html>

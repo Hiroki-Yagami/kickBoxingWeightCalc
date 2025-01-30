@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>キックボクシング階級判定・コンディション管理ツール</title>
+    <link rel="stylesheet" href="kickboxing.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  </head>
+  <body>
+    <header>
+      <div id="canvas-container">
+        <!-- p5.jsのキャンバスがここに描画される -->
+      </div>
+      <div class="header-content">
+        <h1>キックボクシング階級判定</h1>
+        <p>体格データ分析・コンディション管理ツール</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="physical-data" class="card">
+        <h2>体格データ入力</h2>
+        <div class="input-group">
+          <label>
+            身長 (cm)
+            <input type="number" id="height" min="140" max="220" step="0.1" />
+          </label>
+          <label>
+            体重 (kg)
+            <input type="number" id="weight" min="40" max="150" step="0.1" />
+          </label>
+          <label>
+            リーチ (cm)
+            <input type="number" id="reach" min="140" max="220" step="0.1" />
+          </label>
+          <button onclick="analyzePhysical()">分析</button>
+        </div>
+        <div id="physical-result" class="result-area"></div>
+      </section>
+
+      <section id="condition-monitor" class="card">
+        <h2>コンディション記録</h2>
+        <div class="input-group">
+          <label>
+            睡眠時間 (時間)
+            <input type="number" id="sleep" min="0" max="24" step="0.5" />
+          </label>
+          <label>
+            疲労度 (1-10)
+            <input type="range" id="fatigue" min="1" max="10" />
+          </label>
+          <label>
+            モチベーション (1-10)
+            <input type="range" id="motivation" min="1" max="10" />
+          </label>
+          <label>
+            怪我の状態
+            <textarea id="injuries"></textarea>
+          </label>
+          <button onclick="logCondition()">記録</button>
+        </div>
+        <div id="condition-result" class="result-area"></div>
+      </section>
+
+      <section id="nutrition" class="card">
+        <h2>栄養管理</h2>
+        <div class="input-group">
+          <label>
+            活動レベル
+            <select id="activity-level">
+              <option value="1.2">低い（デスクワーク中心）</option>
+              <option value="1.375">普通（週1-2回トレーニング）</option>
+              <option value="1.55">活発（週3-4回トレーニング）</option>
+              <option value="1.725">非常に活発（週5-6回トレーニング）</option>
+              <option value="1.9">アスリート（1日2回トレーニング）</option>
+            </select>
+          </label>
+          <button onclick="calculateNutrition()">計算</button>
+        </div>
+        <div id="nutrition-result" class="result-area"></div>
+      </section>
+        </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="ad-container">
+          <div class="ad-section">
+            <h3>スポンサー広告</h3>
+            <div class="ad-grid">
+              <!-- 広告枠1 -->
+              <div class="ad-slot">
+                <div class="ad-placeholder">
+                  <p>Advertisement 1</p>
+                  <!-- 実際の広告コードをここに配置 -->
+                </div>
+              </div>
+              <!-- 広告枠2 -->
+              <div class="ad-slot">
+                <div class="ad-placeholder">
+                  <p>Advertisement 2</p>
+                  <!-- 実際の広告コードをここに配置 -->
+                </div>
+              </div>
+              <!-- 広告枠3 -->
+              <div class="ad-slot">
+                <div class="ad-placeholder">
+                  <p>Advertisement 3</p>
+                  <!-- 実際の広告コードをここに配置 -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>&copy; 2024 キックボクシング階級判定ツール. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="kickboxing.js"></script>
+  </body>
+</html>
+
+    <script src="kickboxing.js"></script>
+  </body>
+</html>
